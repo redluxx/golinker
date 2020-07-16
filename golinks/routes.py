@@ -27,8 +27,8 @@ def golink_delete(name):
     return redirect(url_for('.index'))
 
 
-@app.route('/<name>')
-@app.route('/<name> <optional_argument>')
+@app.route('/<name>', methods=['GET', 'POST'])
+@app.route('/<name> <optional_argument>', methods=['GET', 'POST'])
 def redirect_to_link(name, optional_argument=None):
     """ Used to redirect to a GoRecord """
     record = GoRecord.query.filter_by(name=name).first()
