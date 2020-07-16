@@ -3,19 +3,21 @@ Go-links
 
 Very simple internal short-linking system.
 
+Usage
+----------
+Python3 is default python.
+* Python2 EOL 01/01/2020 <- Stop using it!
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python -m golinks.webapp
+```
+
 
 Examples
 ----------
-
-```python
-DEMO_RECORDS = [
-    ('mail', 'https://mail.google.com'),
-    ('git', 'https://gitlab.com{/search?terms=^}'),
-    ('github', 'https://github.com{/search?terms=^}'),
-    ('in', 'https://linkedin.com'),
-    ('fb', 'https://www.facebook.com')
-]
-```
 
 If you visit http://go/git you would be redirect to https://gitlab.com
 
