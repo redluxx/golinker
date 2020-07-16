@@ -65,7 +65,7 @@ def golink_edit(name):
     return render_template_with_settings(
         'index.html',
         edit_record=record, 
-        all_records=GoRecord.query.all()
+        all_records=GoRecord.query.order_by(GoRecord.name.asc()).all()
     )
 
 
