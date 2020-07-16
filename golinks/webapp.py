@@ -109,8 +109,8 @@ def golink_submit():
         flash("Incorrect URL format: '{}'".format(url))
         return redirect(url_for('.index')) 
 
-    if favicon is None or not GoRecord.url_checker(favicon):
-        flash("Adjusting Favicon URL - either Empty, None or incorrect format: '{}'".format(favicon))
+    if not GoRecord.url_checker(favicon):
+        flash("Adjusting Favicon URL - either empty or incorrect format: '{}'".format(favicon))
         favicon = GoRecord.faviconer(url)
 
 
@@ -140,9 +140,9 @@ if __name__ == '__main__':
         DB.create_all()
 
         if settings.ADD_DEMO_RECORDS:
-            for demo_name, demo_url in settings.DEMO_RECORDS:
+            for demo_name, demo_url, demo_fav in settings.DEMO_RECORDS:
                 try:
-                    DB.session.add(GoRecord(demo_name, demo_url))
+                    DB.session.add(GoRecord(demo_name, demo_url, demo_fav))
                     DB.session.commit()
                 except:
                     pass

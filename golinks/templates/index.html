@@ -75,7 +75,7 @@
 	<a href="{{ url_for('.index') }}">
 	    <h1>
 		{{settings.TITLE}}
-		<small>{{settings.SUB_TITLE}}</small>
+		<small>Short link service for internal use</small>
 	    </h1>
 	</a>
 	
@@ -101,7 +101,7 @@
 		<!-- Button -->
 		<div class="form-group">
 			<div class="col-md-12 text-center">
-			<button type=submit class="btn btn-primary">{{settings.SEARCH_TEXT}}</button>
+			<button type=submit class="btn btn-primary">Search</button>
 			</div>
 		</div>
 		</fieldset>
@@ -160,12 +160,12 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="button1id"></label>
 		  <div class="col-md-2 text-left">
-			<button type="submit" class="btn btn-success">{{settings.CREATE_UPDATE_TEXT}}</button>
+			<button type="submit" class="btn btn-success">Save</button>
 		  </div>
 		  <div class="col-md-2 text-right">
 			{% if edit_record %}
 			<a href="{{ url_for('.golink_delete', name=edit_record.name) }}" >
-			<button type="button" class="btn btn-danger">{{settings.DELETE_TEXT}}</button>
+			<button type="button" class="btn btn-danger">Delete</button>
 			</a>
 			{% endif %}
 		  </div>

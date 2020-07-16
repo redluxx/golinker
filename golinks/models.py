@@ -17,12 +17,13 @@ class GoRecord(DB.Model):
     owner = DB.Column(DB.String(50))
     visits = DB.Column(DB.Integer,default=0)
 
-    def __init__(self, name, url, owner=None, favicon=None):
+    def __init__(self, name, url, favicon=None, owner=None,):
         """ Make a new GoRecord """
         self.name = name
         self.url = url
-        self.owner = owner
         self.favicon = favicon
+        self.owner = owner
+        
 
     def __repr__(self):
         """ Pretty """
