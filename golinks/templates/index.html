@@ -1,196 +1,191 @@
 <html>
-    <head>
-		<link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap.min.min.css') }}">
+
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap.min.min.css') }}">
 	<style>
-	 body {
-	     max-width: 75%;
-	     margin: 0 auto;
-	     color: #2e2e2e;
-	     background-color: #f7f6f4;
-	     font-family: 'PTSansWeb', 'Segoe UI', Arial, sans-serif;
-	     font-size: 13px;
-	     font-weight: normal;
-	 }
+		body {
+			max-width: 75%;
+			margin: 0 auto;
+			color: #2e2e2e;
+			background-color: #f7f6f4;
+			font-family: 'PTSansWeb', 'Segoe UI', Arial, sans-serif;
+			font-size: 13px;
+			font-weight: normal;
+		}
 
-	 h1 {
-	     text-align: center;
-	     margin: 50px;
-	 }
-	 
-	 h1 > small {
-	     display: block;
-	     color: #aaaaaa;
-	     font-size: 75%;
-	 }
-	 
-	 h3 {
-	     font-size: 200%;
-	 }
+		h1 {
+			text-align: center;
+			margin: 50px;
+		}
 
-	 a {
-	     color: #7dacd6;
-	     text-decoration: none;
-	 }
-	 
-	 a:hover {
-	     color:#6084a5;
-	     box-shadow:0 2px 0 0 #6084a5;
-	 }
+		h1>small {
+			display: block;
+			color: #aaaaaa;
+			font-size: 75%;
+		}
 
-	 .record_name {
-	     font-size: 150%;
-	 }
+		h3 {
+			font-size: 200%;
+		}
 
-	 .favicon {
-	     height: 25px;
-	 }
+		a {
+			color: #7dacd6;
+			text-decoration: none;
+		}
 
-	 .group-link{
-		 letter-spacing:-.43em;
-		 text-rendering:optimizespeed;
-		 font-family:FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
-		 display:-webkit-flex;
-		 -webkit-flex-flow:row wrap;
-		 display:-ms-flexbox;
-		 -ms-flex-flow:row wrap;
-		 -ms-align-content:flex-start;
-		 -webkit-align-content:flex-start;
-		 align-content:flex-start
-	}
+		a:hover {
+			color: #6084a5;
+			box-shadow: 0 2px 0 0 #6084a5;
+		}
 
-	 .single-link{
-		 display:inline-block;
-		 zoom:1;
-		 letter-spacing:normal;
-		 word-spacing:normal;
-		 vertical-align:top;
-		 text-rendering:auto;
-		 width:20%
-	}
+		.record_name {
+			font-size: 150%;
+		}
 
+		.favicon {
+			height: 25px;
+		}
+
+		.group-link {
+			letter-spacing: -.43em;
+			text-rendering: optimizespeed;
+			font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+			display: -webkit-flex;
+			-webkit-flex-flow: row wrap;
+			display: -ms-flexbox;
+			-ms-flex-flow: row wrap;
+			-ms-align-content: flex-start;
+			-webkit-align-content: flex-start;
+			align-content: flex-start
+		}
+
+		.single-link {
+			display: inline-block;
+			zoom: 1;
+			letter-spacing: normal;
+			word-spacing: normal;
+			vertical-align: top;
+			text-rendering: auto;
+			width: 20%
+		}
 	</style>
-		<title>Go Links</title>
-    </head>
-    <body>
+	<title>Go Links</title>
+</head>
+
+<body>
 	<a href="{{ url_for('.index') }}">
-	    <h1>
-		Go Links
-		<small>Short link service for internal use</small>
-	    </h1>
+		<h1>
+			Go Links
+			<small>Short link service for internal use</small>
+		</h1>
 	</a>
-	
+
 	{% with messages = get_flashed_messages() %}
 	{% if messages %}
 	<ul class="flashes">
-	    {% for message in messages %}
-	    <li>{{ message }}</li>
-	    {% endfor %}
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
 	</ul>
 	{% endif %}
 	{% endwith %}
-	
+
 	<form class="form-horizontal" action="/golinks/search/" method="POST">
 		<fieldset>
-		<!-- Search input-->
-		<div class="form-group">
-			<div class="col-md-12">
-			<input type="text" id="searchinput" name="searchinput" placeholder="search for a go-link" class="form-control input-md" value="{{previous_search_text}}">
+			<!-- Search input-->
+			<div class="form-group">
+				<div class="col-md-12">
+					<input type="text" id="searchinput" name="searchinput" placeholder="search for a go-link"
+						class="form-control input-md" value="{{previous_search_text}}">
+				</div>
 			</div>
-		</div>
 
-		<!-- Button -->
-		<div class="form-group">
-			<div class="col-md-12 text-center">
-			<button type=submit class="btn btn-primary">Search</button>
+			<!-- Button -->
+			<div class="form-group">
+				<div class="col-md-12 text-center">
+					<button type=submit class="btn btn-primary">Search</button>
+				</div>
 			</div>
-		</div>
 		</fieldset>
 	</form>
 
-	
+
 	<form class="form-horizontal" action="/golinks/submit/" method="POST">
 		<fieldset>
 
-		<div class="form-group">
-			<div class="col-md-4">
-			<input type="hidden" id="gid" name="gid"
-				{% if edit_record %}
-				value="{{edit_record.gid}}"
-				{% endif %}>
+			<div class="form-group">
+				<div class="col-md-4">
+					<input type="hidden" id="gid" name="gid" {% if edit_record %} value="{{edit_record.gid}}"
+						{% endif %}>
+				</div>
 			</div>
-		</div>	
-		
-		<!-- Text input-->
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="name">Name</label>  
-		  <div class="col-md-4">
-		  <input id="name" name="name" type="text" placeholder="name" class="form-control input-md" 
-				{% if edit_record %}
-				value="{{edit_record.name}}"
-				{% else %}
-				value="{{previous_search_text}}"
-				{% endif %}>
-		  </div>
-		</div>
-		
-		<!-- Text input-->
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="url">URL</label>  
-		  <div class="col-md-4">
-		  <input id="url" name="url" type="text" placeholder="url" class="form-control input-md" 
-				{% if edit_record %}
-				value="{{edit_record.url}}"
-				{% endif %}>	
-		  </div>
-		</div>
-		
-		<!-- Text input-->
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="favi">Favicon</label>  
-		  <div class="col-md-4">
-		  <input id="ffav" name="ffav" type="text" placeholder="favicon url (optional)" class="form-control input-md"
-				{% if edit_record %}
-				value="{{edit_record.favicon}}"
-				{% endif %}>
-			
-		  </div>
-		</div>
-		
-		<!-- Button (Double) -->
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="button1id"></label>
-		  <div class="col-md-2 text-left">
-			<button type="submit" class="btn btn-success">Save</button>
-		  </div>
-		  <div class="col-md-2 text-right">
-			{% if edit_record %}
-			<a href="{{ url_for('.golink_delete', name=edit_record.name) }}" >
-			<button type="button" class="btn btn-danger">Delete</button>
-			</a>
-			{% endif %}
-		  </div>
-		</div>
-		
-	</fieldset>
-	</form>
-		
 
-      {% if all_records %}
-      <div class="found_links">
-	  <h3>All Links</h3>
-	  <div class="group-link">
-	      {% for record in all_records %}
-	      <div class="single-link">
-		  <a href="{{ url_for('.golink_edit', name=record.name) }}" title="{{record.url}}" class="record" >
-		      <img src="{{record.favicon}}" class="favicon" onError="this.onerror = '';this.style.visibility='hidden';" />
-		      <span class="record_header">go/</span>
-		      <span class="record_name">{{record.name}}</span>
-		  </a>
-	      </div>
-	      {% endfor %}
-	  </div>
-      </div>
-      {% endif %}
-      
-    </body>
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="name">Name</label>
+				<div class="col-md-4">
+					<input id="name" name="name" type="text" placeholder="name" class="form-control input-md"
+						{% if edit_record %} value="{{edit_record.name}}" {% else %} value="{{previous_search_text}}"
+						{% endif %}>
+				</div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="url">URL</label>
+				<div class="col-md-4">
+					<input id="url" name="url" type="text" placeholder="url" class="form-control input-md"
+						{% if edit_record %} value="{{edit_record.url}}" {% endif %}>
+				</div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="favi">Favicon</label>
+				<div class="col-md-4">
+					<input id="ffav" name="ffav" type="text" placeholder="favicon url (optional)"
+						class="form-control input-md" {% if edit_record %} value="{{edit_record.favicon}}" {% endif %}>
+
+				</div>
+			</div>
+
+			<!-- Button (Double) -->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="button1id"></label>
+				<div class="col-md-2 text-left">
+					<button type="submit" class="btn btn-success">Save</button>
+				</div>
+				<div class="col-md-2 text-right">
+					{% if edit_record %}
+					<a href="{{ url_for('.golink_delete', name=edit_record.name) }}">
+						<button type="button" class="btn btn-danger">Delete</button>
+					</a>
+					{% endif %}
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+
+
+	{% if all_records %}
+	<div class="found_links">
+		<h3>All Links</h3>
+		<div class="group-link">
+			{% for record in all_records %}
+			<div class="single-link">
+				<a href="{{ url_for('.golink_edit', name=record.name) }}" title="{{record.url}}" class="record">
+					<img src="{{record.favicon}}" class="favicon"
+						onError="this.onerror = '';this.style.visibility='hidden';" />
+					<span class="record_header">go/</span>
+					<span class="record_name">{{record.name}}</span>
+				</a>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+
+</body>
+
 </html>
