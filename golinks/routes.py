@@ -111,7 +111,7 @@ def golink_submit():
         else:
             flash("Successfully updated '{}' to '{.name}'".format(oldname, record))
     else:
-        record = GoRecord(name, url)
+        record = GoRecord(name, url, favicon)
         flash("Successfully created '{.name}'".format(record))
 
     DB.session.add(record)
