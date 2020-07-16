@@ -31,4 +31,4 @@ TODO
 
 Original Author
 -----
-[https://github.com/daniellawrence/go-links-python](https://github.com/daniellawrence/go-links-python/commit/943b96688f6707d37e76c3d1ea007a639e317e3f) 
+[https://github.com/daniellawrence/go-links-python](https://github.com/daniellawrence/go-links-python/tree/943b96688f6707d37e76c3d1ea007a639e317e3f) 
