@@ -84,3 +84,15 @@ def valid_URL(url):
             re.UNICODE | re.IGNORECASE)
 
     return re.match(regex, url) is not None
+
+def faviconer(url):
+    """ Set the favicon URL based on the domain supplied """
+    plain_url = re.sub('{.*}', '', url)
+    domain = plain_url.split('/')[2]
+    favicon_path = "https://{0}/favicon.ico".format(domain)
+    return favicon_path
+
+def url_checker(url):
+    """ This is using a massive regex list """
+    plain_url = re.sub('{.*}', '', url)
+    return valid_URL(plain_url)

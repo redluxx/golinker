@@ -2,7 +2,6 @@
 """
 import re
 from flask_sqlalchemy import SQLAlchemy
-import golinks.utils as utils
 
 DB = SQLAlchemy()
 
@@ -29,20 +28,10 @@ class GoRecord(DB.Model):
         """ Pretty """
         return "<GoRecord {.name}>".format(self)
 
-    def url_checker(url):
-        """ This is using a massive regex list 
-            Remove the import and utilise the list ourselves """
-        plain_url = re.sub('{.*}', '', url)
-        return utils.valid_URL(plain_url)
-
-    def faviconer(url):
-        """ Set the favicon URL based on the domain supplied """
-        plain_url = re.sub('{.*}', '', url)
-        domain = plain_url.split('/')[2]
-        favicon_path = "https://{0}/favicon.ico".format(domain)
-        return favicon_path
-
-        
+    
+    @property
+    def url_plain(self):
+        return re.sub('{.*}', '', self.url)
 
     def link(self, optional=None):
         """ The real link based on the optional stuff """

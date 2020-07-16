@@ -4,6 +4,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash, cur
 from sqlalchemy import desc, asc
 from sqlalchemy.sql import or_
 from golinks.models import DB, GoRecord
+from golinks import utils
 
 @app.route('/')
 def index():
@@ -91,14 +92,13 @@ def golink_submit():
     url = request.form.get('url')
     favicon = request.form.get('ffav')
 
-    if not GoRecord.url_checker(url):
+    if not utils.url_checker(url):
         flash("Incorrect URL format: '{}'".format(url))
         return redirect(url_for('.index')) 
 
-    if not GoRecord.url_checker(favicon):
+    if not utils.url_checker(favicon):
         flash("Adjusting Favicon URL - either empty or incorrect format: '{}'".format(favicon))
         favicon = GoRecord.faviconer(url)
-
 
     record = GoRecord.query.filter_by(gid=gid).first()
     if record:

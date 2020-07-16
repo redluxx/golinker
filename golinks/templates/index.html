@@ -103,7 +103,7 @@
 			<!-- Button -->
 			<div class="form-group">
 				<div class="col-md-12 text-center">
-					<button type=submit class="btn btn-primary">Search</button>
+					<button type=submit class="btn btn-primary btn-lg">Search</button>
 				</div>
 			</div>
 		</fieldset>
@@ -151,7 +151,7 @@
 
 			<!-- Button (Double) -->
 			<div class="form-group">
-				<label class="col-md-4 control-label" for="button1id"></label>
+				<label class="col-md-4 control-label"></label>
 				<div class="col-md-2 text-left">
 					<button type="submit" class="btn btn-success">Save</button>
 				</div>
@@ -163,6 +163,16 @@
 					{% endif %}
 				</div>
 			</div>
+
+			{% if edit_record %}
+			<div class="form-group">
+				<div class="col-md-12 text-center">
+					<a href="{{ url_for('.redirect_to_link', name=edit_record.name) }}">
+						<button type="button" class="btn btn-primary btn-lg">Go</button>
+					</a>
+				</div>
+			</div>
+			{% endif %}
 
 		</fieldset>
 	</form>
