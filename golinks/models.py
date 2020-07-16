@@ -17,7 +17,7 @@ class GoRecord(DB.Model):
     owner = DB.Column(DB.String(50))
     visits = DB.Column(DB.Integer,default=0)
 
-    def __init__(self, name, url, favicon=None, owner=None,):
+    def __init__(self, name, url, favicon=None, owner=None):
         """ Make a new GoRecord """
         self.name = name
         self.url = url
@@ -59,3 +59,15 @@ class GoRecord(DB.Model):
             return '{}{}'.format(self.url_plain, optional_args)
 
         return self.url_plain
+
+class user(DB.Model):
+    """ User Object - Currently not used"""
+    __tablename__ = 'users'
+    gid = DB.Column(DB.Integer ,primary_key=True)
+    user = DB.Column(DB.String(50), unique=True)
+    pwd = DB.Column(DB.String(255))
+    
+    def __init__(self, user, pwd):
+        """ Make a new GoRecord """
+        self.user = user
+        self.pwd = pwd

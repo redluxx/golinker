@@ -1,34 +1,20 @@
 #!/usr/bin/env python
 """ Go-Links Webapp """
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, current_app as app
 from sqlalchemy import desc, asc
 from sqlalchemy.sql import or_
 from golinks.models import DB, GoRecord
-from golinks import settings
 
-WEBAPP = Flask(__name__)
-
-WEBAPP.config['SQLALCHEMY_DATABASE_URI'] = settings.SQLALCHEMY_DATABASE_URI
-WEBAPP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-WEBAPP.secret_key = settings.SECRET_KEY
-DB.init_app(WEBAPP)
-
-
-def render_template_with_settings(template, **kwargs):
-    """ Add all the sends when rendering the template """
-    return render_template(template, settings=settings, **kwargs)
-
-
-@WEBAPP.route('/')
+@app.route('/')
 def index():
     """ Base page """
-    return render_template_with_settings(
+    return render_template(
         'index.html',
         all_records=GoRecord.query.order_by(GoRecord.name.asc()).all()
     )
 
 
-@WEBAPP.route('/golinks/delete/<name>/')
+@app.route('/golinks/delete/<name>/')
 def golink_delete(name):
     """ Used to delete gorecords """
     record = GoRecord.query.filter_by(name=name).first()
@@ -40,8 +26,8 @@ def golink_delete(name):
     return redirect(url_for('.index'))
 
 
-@WEBAPP.route('/<name>')
-@WEBAPP.route('/<name> <optional_argument>')
+@app.route('/<name>')
+@app.route('/<name> <optional_argument>')
 def redirect_to_link(name, optional_argument=None):
     """ Used to redirect to a GoRecord """
     record = GoRecord.query.filter_by(name=name).first()
@@ -57,19 +43,19 @@ def redirect_to_link(name, optional_argument=None):
     return redirect(link)
 
 
-@WEBAPP.route('/golinks/edit/<name>/', methods=['GET'])
+@app.route('/golinks/edit/<name>/', methods=['GET'])
 def golink_edit(name):
     """ Used to edit GoRecords """
     record = GoRecord.query.filter_by(name=name).first_or_404()
 
-    return render_template_with_settings(
+    return render_template(
         'index.html',
         edit_record=record, 
         all_records=GoRecord.query.order_by(GoRecord.name.asc()).all()
     )
 
 
-@WEBAPP.route('/golinks/search/', methods=['POST'])
+@app.route('/golinks/search/', methods=['POST'])
 def golink_search_redirect_post():
     """ Used to Rediect a POST search to a GET """
     search = request.form.get('searchinput')
@@ -79,7 +65,7 @@ def golink_search_redirect_post():
     return redirect(url_for('golink_search', search=search))
 
 
-@WEBAPP.route('/golinks/search/<search>/', methods=['GET'])
+@app.route('/golinks/search/<search>/', methods=['GET'])
 def golink_search(search):
     """ Used to Search for a GoRecord """
     search_like = '%{}%'.format(search)
@@ -90,14 +76,14 @@ def golink_search(search):
 
     all_records = search_q.all()
 
-    return render_template_with_settings(
+    return render_template(
         'index.html',
         all_records=all_records,
         previous_search_text=search
     )
 
 
-@WEBAPP.route('/golinks/submit/', methods=['POST'])
+@app.route('/golinks/submit/', methods=['POST'])
 def golink_submit():
     """ Used to Create or Edit a GoRecord """
     gid = request.form.get('gid')
@@ -132,22 +118,3 @@ def golink_submit():
     DB.session.commit()
 
     return redirect(url_for('.index'))
-
-
-if __name__ == '__main__':
-
-    with WEBAPP.app_context():
-        DB.create_all()
-
-        if settings.ADD_DEMO_RECORDS:
-            for demo_name, demo_url, demo_fav in settings.DEMO_RECORDS:
-                try:
-                    DB.session.add(GoRecord(demo_name, demo_url, demo_fav))
-                    DB.session.commit()
-                except:
-                    pass
-
-    WEBAPP.debug = settings.DEBUG
-    WEBAPP.port = settings.PORT
-    WEBAPP.hostname = settings.HOSTNAME
-    WEBAPP.run()

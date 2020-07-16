@@ -8,13 +8,17 @@ Usage
 Python3 is default python.
 * Python2 EOL 01/01/2020 <- Stop using it!
 
+### Flask
 ```bash
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python -m golinks.webapp
+flask run
 ```
-
+### Waitress
+```bash
+waitress-serve.exe --call 'golinks:create_app'
+```
 
 Examples
 ----------
@@ -28,7 +32,7 @@ TODO
 -----
 
 * Basic authentication
-* Ownership of links with restricted editing
+* Ownership of links with restricted editing based on user
 
 
 Original Author
