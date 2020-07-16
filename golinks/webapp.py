@@ -72,7 +72,7 @@ def golink_edit(name):
 @WEBAPP.route('/golinks/search/', methods=['POST'])
 def golink_search_redirect_post():
     """ Used to Rediect a POST search to a GET """
-    search = request.form.get('search')
+    search = request.form.get('searchinput')
     if not search:
         return redirect(url_for('.index'))
 
@@ -110,7 +110,7 @@ def golink_submit():
         return redirect(url_for('.index')) 
 
     if favicon is None or not GoRecord.url_checker(favicon):
-        flash("Adjusting Favicon URL - either None or incorrect format: '{}'".format(favicon))
+        flash("Adjusting Favicon URL - either Empty, None or incorrect format: '{}'".format(favicon))
         favicon = GoRecord.faviconer(url)
 
 

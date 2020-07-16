@@ -1,9 +1,9 @@
 <html>
     <head>
-	<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.0/build/pure-min.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap.min.min.css') }}">
 	<style>
 	 body {
-	     max-width: 900px;
+	     max-width: 75%;
 	     margin: 0 auto;
 	     color: #2e2e2e;
 	     background-color: #f7f6f4;
@@ -12,43 +12,6 @@
 	     font-weight: normal;
 	 }
 
-	 #search {
-	     width: 80%;
-	 }
-
-	 #name {
-	     width: 20%;
-	 }
-	 #url {
-	     width: 50%;
-	 }
-	 #ffav {
-	     width: 50%;
-	 }
-
-	 .favicon {
-	     height: 32px;
-	     weight: 32px;
-	 }
-
-	 .record_header {
-	     color: #333333;
-	 }
-	 
-	 a {
-	     color: #7dacd6;
-	     text-decoration: none;
-	 }
-	 
-	 a:hover {
-	     color:#6084a5;
-	     box-shadow:0 2px 0 0 #6084a5;
-	 }
-
-	 .xlarge {
-	     font-size: 125%;
-	 }
-	 
 	 h1 {
 	     text-align: center;
 	     margin: 50px;
@@ -60,37 +23,51 @@
 	     font-size: 75%;
 	 }
 	 
-	 input {
-	     font-family: 'PTSansWeb','Segoe UI',Arial,sans-serif;
-	     font-size: 20px;
-	     height: 48px;
-	     color: #3c3c3c;
-	     background-color: #e8e8e8;
-	     border: 0;
-	     padding: 10px;
+	 h3 {
+	     font-size: 200%;
+	 }
+
+	 a {
+	     color: #7dacd6;
+	     text-decoration: none;
 	 }
 	 
-	 button {
-	     height: 48px;
-	     margin-top: -5px;
-	     padding: 20px;
-	 }
-	 
-	 .button-delete {
-             background: rgb(202, 60, 60);
-	 }
-	 
-	 #search-form {
-	     margin-bottom: 50px;
+	 a:hover {
+	     color:#6084a5;
+	     box-shadow:0 2px 0 0 #6084a5;
 	 }
 
 	 .record_name {
 	     font-size: 150%;
 	 }
 
-	 h3 {
-	     font-size: 200%;
+	 .favicon {
+	     height: 25px;
 	 }
+
+	 .group-link{
+		 letter-spacing:-.43em;
+		 text-rendering:optimizespeed;
+		 font-family:FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		 display:-webkit-flex;
+		 -webkit-flex-flow:row wrap;
+		 display:-ms-flexbox;
+		 -ms-flex-flow:row wrap;
+		 -ms-align-content:flex-start;
+		 -webkit-align-content:flex-start;
+		 align-content:flex-start
+	}
+
+	 .single-link{
+		 display:inline-block;
+		 zoom:1;
+		 letter-spacing:normal;
+		 word-spacing:normal;
+		 vertical-align:top;
+		 text-rendering:auto;
+		 width:20%
+	}
+
 	</style>
 		<title>{{settings.TITLE}}</title>
     </head>
@@ -112,74 +89,98 @@
 	{% endif %}
 	{% endwith %}
 	
-	<form id="search-form" class="xlarge" action="/golinks/search/" method="POST">
-	    
-	    <input type="text" id="search" name="search" class="pure-input-10-12"
-		   placeholder="search for a go-link"
-		   value="{{previous_search_text}}"
-	    />
-	    <button type="submit" class="pure-button">
-		{{settings.SEARCH_TEXT}}
-	    </button>
-	</form>
-	
-	<form id="crud-form" class="xlarge" action="/golinks/submit/" method="POST">
-	
-	<input type="hidden" id="gid" name="gid"
-		{% if edit_record %}
-		value="{{edit_record.gid}}"
-		{% endif %}
-	>
+	<form class="form-horizontal" action="/golinks/search/" method="POST">
+		<fieldset>
+		<!-- Search input-->
+		<div class="form-group">
+			<div class="col-md-12">
+			<input type="text" id="searchinput" name="searchinput" placeholder="search for a go-link" class="form-control input-md" value="{{previous_search_text}}">
+			</div>
+		</div>
 
-	<input type="text" id="name" placeholder="name"
-	       name="name" class="pure-input-3-12"
-	       {% if edit_record %}
-	       value="{{edit_record.name}}"
-	       {% endif %}
-	>
-	
-	<label for="url">
-	    Url
-	</label>
-	<input type="text" id="url" placeholder="url"
-	       name="url" class="pure-input-4-12"
-	       {% if edit_record %}
-	       value="{{edit_record.url}}"
-	       {% endif %}
-	>
-		
-	<button type="submit" class="pure-button pure-button-primary">
-	    {{settings.CREATE_UPDATE_TEXT}}
-	</button>
-	
-	{% if edit_record %}
-	<a href="{{ url_for('.golink_delete', name=edit_record.name) }}" >
-	    <button type="button" class="pure-button pure-button-primary button-delete">
-		{{settings.DELETE_TEXT}}
-	    </button>
-	</a>
-	{% endif %}
-	
-	{% if edit_record %}
-	<br>
-	<label for="ffav">
-	    Favicon Override
-	</label>
-	<input type="text" id="ffav" placeholder="favicon"
-	       name="ffav" class="pure-input-4-12"
-	       {% if edit_record %}
-	       value="{{edit_record.favicon}}"
-	       {% endif %}
-	>
-	{% endif %}
+		<!-- Button -->
+		<div class="form-group">
+			<div class="col-md-12 text-center">
+			<button type=submit class="btn btn-primary">{{settings.SEARCH_TEXT}}</button>
+			</div>
+		</div>
+		</fieldset>
 	</form>
+
+	
+	<form class="form-horizontal" action="/golinks/submit/" method="POST">
+		<fieldset>
+
+		<div class="form-group">
+			<div class="col-md-4">
+			<input type="hidden" id="gid" name="gid"
+				{% if edit_record %}
+				value="{{edit_record.gid}}"
+				{% endif %}>
+			</div>
+		</div>	
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="name">Name</label>  
+		  <div class="col-md-4">
+		  <input id="name" name="name" type="text" placeholder="name" class="form-control input-md" 
+				{% if edit_record %}
+				value="{{edit_record.name}}"
+				{% else %}
+				value="{{previous_search_text}}"
+				{% endif %}>
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="url">URL</label>  
+		  <div class="col-md-4">
+		  <input id="url" name="url" type="text" placeholder="url" class="form-control input-md" 
+				{% if edit_record %}
+				value="{{edit_record.url}}"
+				{% endif %}>	
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="favi">Favicon</label>  
+		  <div class="col-md-4">
+		  <input id="ffav" name="ffav" type="text" placeholder="favicon url (optional)" class="form-control input-md"
+				{% if edit_record %}
+				value="{{edit_record.favicon}}"
+				{% endif %}>
+			
+		  </div>
+		</div>
+		
+		<!-- Button (Double) -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="button1id"></label>
+		  <div class="col-md-2 text-left">
+			<button type="submit" class="btn btn-success">{{settings.CREATE_UPDATE_TEXT}}</button>
+		  </div>
+		  <div class="col-md-2 text-right">
+			{% if edit_record %}
+			<a href="{{ url_for('.golink_delete', name=edit_record.name) }}" >
+			<button type="button" class="btn btn-danger">{{settings.DELETE_TEXT}}</button>
+			</a>
+			{% endif %}
+		  </div>
+		</div>
+		
+	</fieldset>
+	</form>
+		
 
       {% if all_records %}
       <div class="found_links">
 	  <h3>All Links</h3>
-	  <div class="pure-g">
+	  <div class="group-link">
 	      {% for record in all_records %}
-	      <div class="pure-u-1-5">
+	      <div class="single-link">
 		  <a href="{{ url_for('.golink_edit', name=record.name) }}" title="{{record.url}}" class="record" >
 		      <img src="{{record.favicon}}" class="favicon" onError="this.onerror = '';this.style.visibility='hidden';" />
 		      <span class="record_header">go/</span>
