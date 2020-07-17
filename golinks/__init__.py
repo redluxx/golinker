@@ -5,7 +5,7 @@ from golinks.models import DB
 def create_app():
     """Construct the core application."""
     app = Flask(__name__)
-    app.config.from_object('golinks.config.DevConfig')
+    app.config.from_object('config.Config')
     DB.init_app(app)
   
     with app.app_context():
