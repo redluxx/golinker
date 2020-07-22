@@ -1,0 +1,12 @@
+[Unit]
+Description=GoLinker Application
+After=network.target
+
+[Service]
+User=$USER
+WorkingDirectory=/git/golinker
+ExecStart=/git/golinker/venv/bin/waitress-serve --call golinks:create_app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
