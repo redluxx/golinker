@@ -18,8 +18,13 @@ pip install -r requirements.txt
 flask run
 ```
 ### Waitress
+#### Windows
 ```bash
 waitress-serve.exe --call 'golinks:create_app'
+```
+#### Linux
+```bash
+waitress-serve --call 'golinks:create_app'
 ```
 
 Examples

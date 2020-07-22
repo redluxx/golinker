@@ -12,7 +12,7 @@ setup(
     version="0.1.0",
     description="Very simple internal short-linking system.",
     long_description=long_description,
-    url="https://github.com/redbriar/golinker",
+    url="https://github.com/redluxx/golinker",
     license="MIT",
     packages=find_packages(exclude=['tests'])
 )
