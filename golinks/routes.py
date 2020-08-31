@@ -98,7 +98,7 @@ def golink_submit():
 
     if not utils.url_checker(favicon):
         flash("Adjusting Favicon URL - either empty or incorrect format: '{}'".format(favicon))
-        favicon = GoRecord.faviconer(url)
+        favicon = utils.faviconer(url)
 
     record = GoRecord.query.filter_by(gid=gid).first()
     if record:
