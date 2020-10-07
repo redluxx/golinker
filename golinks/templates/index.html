@@ -1,95 +1,6 @@
-<html>
+{% extends 'base.html' %}
 
-<head>
-	<link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
-		body {
-			max-width: 75%;
-			margin: 0 auto;
-			color: #2e2e2e;
-			background-color: #f7f6f4;
-			font-family: 'PTSansWeb', 'Segoe UI', Arial, sans-serif;
-			font-size: 13px;
-			font-weight: normal;
-		}
-
-		h1 {
-			text-align: center;
-			margin: 50px;
-		}
-
-		h1>small {
-			display: block;
-			color: #aaaaaa;
-			font-size: 75%;
-		}
-
-		h3 {
-			font-size: 200%;
-		}
-
-		a {
-			color: #7dacd6;
-			text-decoration: none;
-		}
-
-		a:hover {
-			color: #6084a5;
-			box-shadow: 0 2px 0 0 #6084a5;
-		}
-
-		.record_name {
-			font-size: 150%;
-		}
-
-		.favicon {
-			height: 25px;
-		}
-
-		.group-link {
-			letter-spacing: -.43em;
-			text-rendering: optimizespeed;
-			font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
-			display: -webkit-flex;
-			-webkit-flex-flow: row wrap;
-			display: -ms-flexbox;
-			-ms-flex-flow: row wrap;
-			-ms-align-content: flex-start;
-			-webkit-align-content: flex-start;
-			align-content: flex-start
-		}
-
-		.single-link {
-			display: inline-block;
-			zoom: 1;
-			letter-spacing: normal;
-			word-spacing: normal;
-			vertical-align: top;
-			text-rendering: auto;
-			width: 20%
-		}
-	</style>
-	<title>Go Links</title>
-</head>
-
-<body>
-	<a href="{{ url_for('.index') }}">
-		<h1>
-			Go Links
-			<small>Short link service for internal use</small>
-		</h1>
-	</a>
-
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-	<ul class="flashes">
-		{% for message in messages %}
-		<li>{{ message }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-	{% endwith %}
+{% block content %}
 
 	<form class="form-horizontal" action="/golinks/search/" method="POST">
 		<fieldset>
@@ -195,7 +106,4 @@
 		</div>
 	</div>
 	{% endif %}
-
-</body>
-
-</html>
+{% endblock %}
