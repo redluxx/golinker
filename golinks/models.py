@@ -60,3 +60,23 @@ class user(DB.Model):
         """ Make a new GoRecord """
         self.user = user
         self.pwd = pwd
+
+class Settings(DB.Model):
+    """ Settings storage """
+    __tablename__ = 'settings'
+    name = DB.Column(DB.String(50), primary_key=True, unique=True)
+    status = DB.Column(DB.Boolean, default=False)
+
+    def __init__(self, name, status):
+        """ New setting """
+        self.name = name
+        self.status = status
+
+    def setup():
+        vals = ['ADMIN', 'EDITOR']
+        for entry in vals:
+            setting = Settings.query.filter_by(name=entry).first()
+            if not setting:
+                settings = Settings(entry, False)
+                DB.session.add(settings)
+                DB.session.commit()
