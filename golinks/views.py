@@ -3,7 +3,7 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, current_app as app
 from sqlalchemy import desc, asc
 from sqlalchemy.sql import or_
-from golinks.models import DB, GoRecord
+from golinks.models import DB, GoRecord, Settings
 from golinks import utils
 
 @app.route('/')
@@ -47,6 +47,10 @@ def redirect_to_link(name, optional_argument=None):
 @app.route('/golinks/edit/<name>/', methods=['GET'])
 def golink_edit(name):
     """ Used to edit GoRecords """
+    EDITOR = Settings.query.filter_by(name="EDITOR").first()
+    if not EDITOR.status:
+        return redirect(url_for('redirect_to_link', name=name))
+
     record = GoRecord.query.filter_by(name=name).first_or_404()
 
     return render_template(
