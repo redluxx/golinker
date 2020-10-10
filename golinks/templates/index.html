@@ -60,14 +60,13 @@
 
 			<!-- Button (Double) -->
 			<div class="form-group row">
-				<div class="col-4"></div>
-				<div class="col-3">
-					<button type="submit" class="btn btn-success">Save</button>
+				<div class="col-6 text-right">
+					<button type="submit" class="btn btn-success mr-md-4">Save</button>
 				</div>
 				{% if edit_record %}
-				<div class="col-4">
+				<div class="col-6">
 					<a href="{{ url_for('.golink_delete', name=edit_record.name) }}">
-						<button type="button" class="btn btn-danger">Delete</button>
+						<button type="button" class="btn btn-danger ml-md-4">Delete</button>
 					</a>
 				</div>
 				{% endif %}
@@ -75,7 +74,7 @@
 
 			{% if edit_record %}
 			<div class="form-group row">
-				<div class="col-md-12 text-center">
+				<div class="col-12 text-center">
 					<a href="{{ url_for('.redirect_to_link', name=edit_record.name) }}">
 						<button type="button" class="btn btn-primary btn-lg">Go</button>
 					</a>
