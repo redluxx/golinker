@@ -74,6 +74,12 @@
 		.navbar { 
 			margin-right: 50px; 
 		}
+
+		.label-field {
+			text-align: right;
+			font-weight: bold;
+			font-size: 16px;
+			}
 	
 		{% block style %}{% endblock %}
 	</style>
@@ -86,12 +92,14 @@
 
 <body>
 
-	<div id="navbar" class="navbar navbar-fixed-top">
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{{ url_for('.index') }}">Home</a></li>
-			<li><a href="{{ url_for('.settings') }}">Settings</a></li>
+	<div id="navbar" class="navbar fixed-top navbar-expand-md">
+		<ul class="nav navbar-nav ml-auto">
+			<li class="nav-item"><a href="{{ url_for('.index') }}"" class="nav-link">Home</a>
+			</li>
+			<li class="nav-item"><a href="{{ url_for('.settings') }}" class="nav-link">Settings</a>
+			</li>
 		</ul>
-	   </div>
+	</div>
 	   
 	<a href="{{ url_for('.index') }}">
 		<h1>

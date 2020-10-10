@@ -22,52 +22,50 @@
 	</form>
 
 
-	<form class="form-horizontal" action="/golinks/submit/" method="POST">
+	<form action="/golinks/submit/" method="POST">
 		<fieldset>
 
-			<div class="form-group">
-				<div class="col-md-4">
+			<div class="form-group row">
+				<div class="col-4">
 					<input type="hidden" id="gid" name="gid" {% if edit_record %} value="{{edit_record.gid}}"
 						{% endif %}>
 				</div>
 			</div>
 
 			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="name">Name</label>
-				<div class="col-md-4">
-					<input id="name" name="name" type="text" placeholder="name" class="form-control input-md"
-						{% if edit_record %} value="{{edit_record.name}}" {% else %} value="{{previous_search_text}}"
+			<div class="form-group row">
+				<label for="name" class="col-4 col-form-label label-field">Name</label> 
+				<div class="col-4">
+				  <input id="name" name="name" type="text" placeholder="name" class="form-control"
+				  {% if edit_record %} value="{{edit_record.name}}" {% else %} value="{{previous_search_text}}"
 						{% endif %}>
 				</div>
-			</div>
+			</div> 
 
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="url">URL</label>
-				<div class="col-md-4">
-					<input id="url" name="url" type="text" placeholder="url" class="form-control input-md"
-						{% if edit_record %} value="{{edit_record.url}}" {% endif %}>
+			<div class="form-group row">
+				<label for="url" class="col-4 col-form-label label-field">URL</label> 
+				<div class="col-4">
+				  <input id="url" name="url" type="text" placeholder="URL" class="form-control"
+				  {% if edit_record %} value="{{edit_record.url}}" {% endif %}>
 				</div>
-			</div>
+			</div> 
 
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="ffav">Favicon</label>
-				<div class="col-md-4">
-					<input id="ffav" name="ffav" type="text" placeholder="favicon url (optional)"
-						class="form-control input-md" {% if edit_record %} value="{{edit_record.favicon}}" {% endif %}>
-
+			<div class="form-group row">
+				<label for="ffav" class="col-4 col-form-label label-field">Favicon</label> 
+				<div class="col-4">
+				  <input id="ffav" name="ffav" type="text" placeholder="Favicon URL (Optional)" class="form-control"
+				  {% if edit_record %} value="{{edit_record.favicon}}" {% endif %}>
 				</div>
-			</div>
+			</div> 
 
 			<!-- Button (Double) -->
 			<div class="form-group row">
-				<div class="pull-left">
+				<div class="col-4"></div>
+				<div class="col-3">
 					<button type="submit" class="btn btn-success">Save</button>
 				</div>
 				{% if edit_record %}
-				<div class="pull-right">
+				<div class="col-4">
 					<a href="{{ url_for('.golink_delete', name=edit_record.name) }}">
 						<button type="button" class="btn btn-danger">Delete</button>
 					</a>
@@ -76,18 +74,17 @@
 			</div>
 
 			{% if edit_record %}
-			<div class="form-group">
+			<div class="form-group row">
 				<div class="col-md-12 text-center">
 					<a href="{{ url_for('.redirect_to_link', name=edit_record.name) }}">
 						<button type="button" class="btn btn-primary btn-lg">Go</button>
 					</a>
 				</div>
-			</div>
+			</div> 
 			{% endif %}
 
 		</fieldset>
 	</form>
-
 
 	{% if all_records %}
 	<div class="found_links">
