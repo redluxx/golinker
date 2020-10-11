@@ -66,17 +66,19 @@ class Settings(DB.Model):
     __tablename__ = 'settings'
     name = DB.Column(DB.String(50), primary_key=True, unique=True)
     status = DB.Column(DB.Boolean, default=False)
+    comment = DB.Column(DB.String(255))
 
-    def __init__(self, name, status):
+    def __init__(self, name, status, comment):
         """ New setting """
         self.name = name
         self.status = status
+        self.comment = comment
 
     def setup():
-        vals = ['ADMIN', 'EDITOR']
-        for entry in vals:
-            setting = Settings.query.filter_by(name=entry).first()
+        vals = {"ADMIN" : "Currently not used.", "EDITOR" : "Editing of configured links", "DARKMODE" : "Currently not used."}
+        for name, comment in vals.items():
+            setting = Settings.query.filter_by(name=name).first()
             if not setting:
-                settings = Settings(entry, False)
+                settings = Settings(name, False, comment)
                 DB.session.add(settings)
                 DB.session.commit()
