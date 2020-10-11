@@ -50,10 +50,11 @@ def redirect_to_link(name, optional_argument=None):
 def golink_edit(name):
     """ Used to edit GoRecords """
     EDITOR = Settings.query.filter_by(name="EDITOR").first()
-    if not EDITOR.status:
-        return redirect(url_for('redirect_to_link', name=name))
+    record = GoRecord.query.filter_by(name=name).first()
 
-    record = GoRecord.query.filter_by(name=name).first_or_404()
+    if not EDITOR.status:
+        link = record.link()
+        return redirect(link)    
 
     return render_template(
         'index.html',
