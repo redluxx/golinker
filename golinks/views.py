@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """ Go-Links Webapp """
-from flask import Flask, request, render_template, redirect, url_for, flash, current_app as app
+import os
+
+from flask import Flask, request, render_template, redirect, url_for, flash, current_app as app, send_from_directory
 from sqlalchemy import desc, asc
 from sqlalchemy.sql import or_
 from golinks.models import DB, GoRecord, Settings
@@ -101,8 +103,8 @@ def golink_submit():
         return redirect(url_for('.index')) 
 
     if not utils.url_checker(favicon):
-        flash("Adjusting Favicon URL - either empty or incorrect format: '{}'".format(favicon))
-        favicon = utils.faviconer(url)
+        flash("Setting default favicon - either empty or incorrect format: '{}'".format(favicon))
+        favicon = url_for('default_favicon')
 
     record = GoRecord.query.filter_by(gid=gid).first()
     if record:
@@ -122,3 +124,8 @@ def golink_submit():
     DB.session.commit()
 
     return redirect(url_for('.index'))
+
+@app.route('/default_favicon.ico')
+def default_favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'image/default_favicon.ico', mimetype='image/x-icon')
