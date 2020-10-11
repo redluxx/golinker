@@ -1,95 +1,6 @@
-<html>
+{% extends 'base.html' %}
 
-<head>
-	<link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap.min.css') }}">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
-		body {
-			max-width: 75%;
-			margin: 0 auto;
-			color: #2e2e2e;
-			background-color: #f7f6f4;
-			font-family: 'PTSansWeb', 'Segoe UI', Arial, sans-serif;
-			font-size: 13px;
-			font-weight: normal;
-		}
-
-		h1 {
-			text-align: center;
-			margin: 50px;
-		}
-
-		h1>small {
-			display: block;
-			color: #aaaaaa;
-			font-size: 75%;
-		}
-
-		h3 {
-			font-size: 200%;
-		}
-
-		a {
-			color: #7dacd6;
-			text-decoration: none;
-		}
-
-		a:hover {
-			color: #6084a5;
-			box-shadow: 0 2px 0 0 #6084a5;
-		}
-
-		.record_name {
-			font-size: 150%;
-		}
-
-		.favicon {
-			height: 25px;
-		}
-
-		.group-link {
-			letter-spacing: -.43em;
-			text-rendering: optimizespeed;
-			font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
-			display: -webkit-flex;
-			-webkit-flex-flow: row wrap;
-			display: -ms-flexbox;
-			-ms-flex-flow: row wrap;
-			-ms-align-content: flex-start;
-			-webkit-align-content: flex-start;
-			align-content: flex-start
-		}
-
-		.single-link {
-			display: inline-block;
-			zoom: 1;
-			letter-spacing: normal;
-			word-spacing: normal;
-			vertical-align: top;
-			text-rendering: auto;
-			width: 20%
-		}
-	</style>
-	<title>Go Links</title>
-</head>
-
-<body>
-	<a href="{{ url_for('.index') }}">
-		<h1>
-			Go Links
-			<small>Short link service for internal use</small>
-		</h1>
-	</a>
-
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-	<ul class="flashes">
-		{% for message in messages %}
-		<li>{{ message }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-	{% endwith %}
+{% block content %}
 
 	<form class="form-horizontal" action="/golinks/search/" method="POST">
 		<fieldset>
@@ -111,72 +22,68 @@
 	</form>
 
 
-	<form class="form-horizontal" action="/golinks/submit/" method="POST">
+	<form action="/golinks/submit/" method="POST">
 		<fieldset>
 
-			<div class="form-group">
-				<div class="col-md-4">
+			<div class="form-group row">
+				<div class="col-4">
 					<input type="hidden" id="gid" name="gid" {% if edit_record %} value="{{edit_record.gid}}"
 						{% endif %}>
 				</div>
 			</div>
 
 			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="name">Name</label>
-				<div class="col-md-4">
-					<input id="name" name="name" type="text" placeholder="name" class="form-control input-md"
-						{% if edit_record %} value="{{edit_record.name}}" {% else %} value="{{previous_search_text}}"
+			<div class="form-group row">
+				<label for="name" class="col-4 col-form-label label-field">Name</label> 
+				<div class="col-4">
+				  <input id="name" name="name" type="text" placeholder="name" class="form-control"
+				  {% if edit_record %} value="{{edit_record.name}}" {% else %} value="{{previous_search_text}}"
 						{% endif %}>
 				</div>
-			</div>
+			</div> 
 
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="url">URL</label>
-				<div class="col-md-4">
-					<input id="url" name="url" type="text" placeholder="url" class="form-control input-md"
-						{% if edit_record %} value="{{edit_record.url}}" {% endif %}>
+			<div class="form-group row">
+				<label for="url" class="col-4 col-form-label label-field">URL</label> 
+				<div class="col-4">
+				  <input id="url" name="url" type="text" placeholder="URL" class="form-control"
+				  {% if edit_record %} value="{{edit_record.url}}" {% endif %}>
 				</div>
-			</div>
+			</div> 
 
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="ffav">Favicon</label>
-				<div class="col-md-4">
-					<input id="ffav" name="ffav" type="text" placeholder="favicon url (optional)"
-						class="form-control input-md" {% if edit_record %} value="{{edit_record.favicon}}" {% endif %}>
-
+			<div class="form-group row">
+				<label for="ffav" class="col-4 col-form-label label-field">Favicon</label> 
+				<div class="col-4">
+				  <input id="ffav" name="ffav" type="text" placeholder="Favicon URL (Optional)" class="form-control"
+				  {% if edit_record %} value="{{edit_record.favicon}}" {% endif %}>
 				</div>
-			</div>
+			</div> 
 
 			<!-- Button (Double) -->
 			<div class="form-group row">
-				<div class="pull-left">
-					<button type="submit" class="btn btn-success">Save</button>
+				<div class="col-6 text-right">
+					<button type="submit" class="btn btn-success mr-md-4">Save</button>
 				</div>
 				{% if edit_record %}
-				<div class="pull-right">
+				<div class="col-6">
 					<a href="{{ url_for('.golink_delete', name=edit_record.name) }}">
-						<button type="button" class="btn btn-danger">Delete</button>
+						<button type="button" class="btn btn-danger ml-md-4">Delete</button>
 					</a>
 				</div>
 				{% endif %}
 			</div>
 
 			{% if edit_record %}
-			<div class="form-group">
-				<div class="col-md-12 text-center">
+			<div class="form-group row">
+				<div class="col-12 text-center">
 					<a href="{{ url_for('.redirect_to_link', name=edit_record.name) }}">
 						<button type="button" class="btn btn-primary btn-lg">Go</button>
 					</a>
 				</div>
-			</div>
+			</div> 
 			{% endif %}
 
 		</fieldset>
 	</form>
-
 
 	{% if all_records %}
 	<div class="found_links">
@@ -195,7 +102,4 @@
 		</div>
 	</div>
 	{% endif %}
-
-</body>
-
-</html>
+{% endblock %}

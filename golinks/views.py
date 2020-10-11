@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 """ Go-Links Webapp """
-from flask import Flask, request, render_template, redirect, url_for, flash, current_app as app
+import os
+
+from flask import Flask, request, render_template, redirect, url_for, flash, current_app as app, send_from_directory
 from sqlalchemy import desc, asc
 from sqlalchemy.sql import or_
-from golinks.models import DB, GoRecord
+from golinks.models import DB, GoRecord, Settings
 from golinks import utils
 
 @app.route('/')
@@ -47,7 +49,12 @@ def redirect_to_link(name, optional_argument=None):
 @app.route('/golinks/edit/<name>/', methods=['GET'])
 def golink_edit(name):
     """ Used to edit GoRecords """
-    record = GoRecord.query.filter_by(name=name).first_or_404()
+    EDITOR = Settings.query.filter_by(name="EDITOR").first()
+    record = GoRecord.query.filter_by(name=name).first()
+
+    if not EDITOR.status:
+        link = record.link()
+        return redirect(link)    
 
     return render_template(
         'index.html',
@@ -97,8 +104,8 @@ def golink_submit():
         return redirect(url_for('.index')) 
 
     if not utils.url_checker(favicon):
-        flash("Adjusting Favicon URL - either empty or incorrect format: '{}'".format(favicon))
-        favicon = utils.faviconer(url)
+        flash("Setting default favicon - either empty or incorrect format: '{}'".format(favicon))
+        favicon = url_for('default_favicon')
 
     record = GoRecord.query.filter_by(gid=gid).first()
     if record:
@@ -118,3 +125,8 @@ def golink_submit():
     DB.session.commit()
 
     return redirect(url_for('.index'))
+
+@app.route('/default_favicon.ico')
+def default_favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'image/default_favicon.ico', mimetype='image/x-icon')

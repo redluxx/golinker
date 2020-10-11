@@ -1,6 +1,6 @@
 """Initialize Flask Application."""
 from flask import Flask
-from golinks.models import DB
+from golinks.models import DB, Settings
 
 def create_app():
     """Construct the core application."""
@@ -9,8 +9,10 @@ def create_app():
     DB.init_app(app)
   
     with app.app_context():
-        from . import routes
+        from . import views
+        from .extras.settings import views
 
         DB.create_all()
+        Settings.setup()
 
         return app
